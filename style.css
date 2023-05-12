@@ -1,15 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Macondo+Swash+Caps&display=swap');
 
 body {
+	display: flex;
+	flex-direction: column;
+	margin: unset;
+	height: 100vh;
+	align-items: center;
 	font-family: "Macondo Swash Caps";
 	box-sizing: border-box;
 	background-color: thistle;
 }
 
 h1 {
-	text-align: center;
 	font-size: 50px;
-	margin: 20px;
+	margin: 15px;
 	text-shadow: 3px 2px 2px mediumpurple;
 }
 
@@ -18,14 +22,14 @@ h1 {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 50px;
+	gap: 30px;
 }
 
 	.grid-container {
 		display: flex;
 		flex-wrap: wrap;
-		width: 640px;
-		height: 640px;
+		width: 65vh;
+		height: 65vh;
 		border: 2px solid black;
 		box-shadow: 7px 7px 3px 0px;
 		border-radius: 8px;
@@ -58,4 +62,23 @@ h1 {
 		padding: 8px;
 		border: 2px outset white;
 		border-radius: 10px;
+	}
+
+footer {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	text-align: center;
+	font-size: large;
+	margin: auto 0 10px;
+}
+
+	.fa-github {
+		color: black;
+	}
+
+	.fa-github:hover {
+		color: black;
+		transition: transform 0.7s ease-in-out;
+		transform: rotate(-360deg) scale(1.3);
 	}
