@@ -8,6 +8,7 @@ function drawGrid(squaresPerSide) {
 	for (let index = 0; index < squaresPerSide**2; index++) {	
 		let square = document.createElement("div");
 		square.classList.add("square");
+		square.classList.remove("triggered")
 		square.style.height = `${squaresSidePixels}px`;
 		square.style.width = `${squaresSidePixels}px`;
 		square.style.fontSize = `${squaresSidePixels / 2.5}px`
@@ -25,10 +26,16 @@ function drawGrid(squaresPerSide) {
 drawGrid(squaresPerSide);
 
 
-const button = document.querySelector("button");
-button.addEventListener("click", redrawGrid);
+const redraw = document.querySelector(".redraw");
+redraw.addEventListener("click", redrawGrid);
 
-function redrawGrid(squaresPerSide) {
+const clearBoard = document.querySelector(".clearBoard");
+clearBoard.addEventListener("click", () => {
+	removeAllChildNodes(gridContainer);
+	drawGrid(squaresPerSide);
+});
+
+function redrawGrid() {
 	let answerOkay = false;
 	while (!answerOkay) {
 		squaresPerSide = Math.floor(+prompt("How many squares in the grid? E.g. 10x10", 10));
