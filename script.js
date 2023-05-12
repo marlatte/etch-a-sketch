@@ -1,22 +1,49 @@
-/*
-- Loop in loop to create a 16x16 grid of 256 squares with sides x
-- Append them in main-container and set width to x/16
-*/
-
 const gridContainer = document.querySelector(".grid-container");
-let squareSideLength = 50;
-let gridSideLength = 16;
+let squaresPerSide = 16;
+let gridSidePixelsRaw = getComputedStyle(gridContainer).height;
+let gridSidePixels = +gridSidePixelsRaw.slice(0, gridSidePixelsRaw.length - 2);
+
+function drawGrid(squaresPerSide) {
+	let squaresSidePixels = gridSidePixels / squaresPerSide;
+	for (let index = 0; index < squaresPerSide**2; index++) {	
+		let square = document.createElement("div");
+		square.classList.add("square");
+		square.style.height = `${squaresSidePixels}px`;
+		square.style.width = `${squaresSidePixels}px`;
+		square.style.fontSize = `${squaresSidePixels / 2.5}px`
+		// square.textContent = index + 1
+	
+		gridContainer.appendChild(square);
+	}
+	let squares = document.querySelectorAll(".square");
+	squares.forEach(square => {
+		square.addEventListener("mouseenter", () => {
+			square.classList.add("triggered");
+		});
+	});
+}
+drawGrid(squaresPerSide);
 
 
-for (let index = 0; index < gridSideLength**2; index++) {	
-	let square = document.createElement("div");
-	square.classList.add("square");
-	square.style.height = `${squareSideLength}px`;
-	square.style.width = `${squareSideLength}px`;
-	square.textContent = index + 1
+const button = document.querySelector("button");
+button.addEventListener("click", redrawGrid);
 
-	gridContainer.appendChild(square);
+function redrawGrid(squaresPerSide) {
+	let answerOkay = false;
+	while (!answerOkay) {
+		squaresPerSide = Math.floor(+prompt("How many squares in the grid? E.g. 10x10", 10));
+		if (squaresPerSide > 0 && squaresPerSide < 100) {
+			answerOkay = true;
+		} else {
+			alert("Try again  with a number between 0 and 100.")
+		}
+	};
+	removeAllChildNodes(gridContainer);
+	drawGrid(squaresPerSide);
 }
 
-gridContainer.style.height = `${gridSideLength * squareSideLength}px`
-gridContainer.style.width = `${gridSideLength * squareSideLength}px`
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
