@@ -31,10 +31,10 @@ function drawGrid(squaresPerSide) {
 drawGrid(squaresPerSide);
 
 
-const redraw = document.querySelector(".redraw");
+const redraw = document.querySelector("#redraw");
 redraw.addEventListener("click", redrawGrid);
 
-const clearBoard = document.querySelector(".clearBoard");
+const clearBoard = document.querySelector("#clearBoard");
 clearBoard.addEventListener("click", () => {
 	removeAllChildNodes(gridContainer);
 	drawGrid(squaresPerSide);
