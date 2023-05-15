@@ -5,7 +5,7 @@ Project outline [available here](https://www.theodinproject.com/lessons/foundati
 
 ### To Do List
 
-- [ ] Add OG outer details (red box, knobs, etc.).
-- [ ] Classic vs Rainbow buttons.
+- [x] Add OG outer details (red box, knobs, etc.).
+- [x] Classic vs Rainbow buttons.
 - [ ] Grid size slider?
-- [ ] Make more consistent with Fantasy theme or nix that.
+- [ ] Add more theme details.
