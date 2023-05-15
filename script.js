@@ -3,6 +3,16 @@ let squaresPerSide = 16;
 let gridSidePixelsRaw = getComputedStyle(gridContainer).height;
 let gridSidePixels = +gridSidePixelsRaw.slice(0, gridSidePixelsRaw.length - 2);
 
+let rainbowButton = document.querySelector("#rainbow");
+let rainbowMode = false;
+rainbowButton.addEventListener("click", () => {
+	rainbowMode = true;
+});
+let classicButton = document.querySelector("#classic");
+classicButton.addEventListener("click", ()  => {
+	rainbowMode  = false;
+})
+
 function drawGrid(squaresPerSide) {
 	let squaresSidePixels = gridSidePixels / squaresPerSide;
 	for (let index = 0; index < squaresPerSide**2; index++) {	
@@ -10,20 +20,26 @@ function drawGrid(squaresPerSide) {
 		square.classList.add("square");
 		square.style.height = `${squaresSidePixels}px`;
 		square.style.width = `${squaresSidePixels}px`;
-		square.style.fontSize = `${squaresSidePixels / 2.5}px`
+		// square.style.fontSize = `${squaresSidePixels / 2.5}px`
 	
 		gridContainer.appendChild(square);
 	}
+
 	let squares = document.querySelectorAll(".square");
 	squares.forEach(square => {
 		square.addEventListener("mouseenter", () => {
 			square.classList.add("triggered");
-			if (getComputedStyle(square).backgroundColor === "rgb(255, 255, 255)") {
-				square.style.backgroundColor = "#" + getRandomColor();
+			if (rainbowMode === true) {
+				let currentBackgroundColor = getComputedStyle(square).backgroundColor;
+				if (currentBackgroundColor === "rgb(255, 255, 255)") {
+					square.style.backgroundColor = "#" + getRandomColor();
+				} else if (currentBackgroundColor !== "rgb(0, 0, 0)") {
+					let firstColor = getHexColor(getComputedStyle(square).backgroundColor);
+					let newColor = LightenDarkenColor(firstColor, -10);
+					square.style.backgroundColor = "#" + newColor;
+				}
 			} else {
-				let firstColor = getHexColor(getComputedStyle(square).backgroundColor);
-				let newColor = LightenDarkenColor(firstColor, -10);
-				square.style.backgroundColor = "#" + newColor;
+				square.style.backgroundColor = "black";
 			}
 		});
 	});
@@ -67,9 +83,10 @@ function getRandomColor() {
 	  color += letters[Math.floor(Math.random() * 16)];
 	}
 	return color;
-  }
+}
 
-  function getHexColor(color){
+
+function getHexColor(color){
 	// H/T to StackOverflow user jave.web for this one.
     //if color is already in hex, just return it...
     if( color.toString().length == 6 ) return color;
@@ -94,7 +111,7 @@ function getRandomColor() {
             + ( '0' + parseInt(color[2], 10).toString(16) ).slice(-2);
 }
 
-  function LightenDarkenColor(firstColor, percentChange) {
+function LightenDarkenColor(firstColor, percentChange) {
 	// h/t StackOverflow user Pimp Trizkit
 	let num = parseInt(firstColor, 16);
 	let r = (num >> 16) * (1 + (percentChange / 100));
@@ -106,4 +123,4 @@ function getRandomColor() {
 		newColor = "0" + newColor;
 	}
 	return newColor;
-  }
+}
